@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 function Login() {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const handleButtonClick = () => {
+    //valiadte the from data
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+
+    if (message) return;
+  };
 
   const toggleSingInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -17,10 +28,15 @@ function Login() {
           alt="backgroundimag"
         />
       </div>
-      <form className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-85">
-        <hi className="text-3xl font-bold py-4">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-85"
+      >
+        <h1 className="text-3xl font-bold py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
-        </hi>
+        </h1>
         {!isSignInForm && (
           <input
             type="Full Name "
@@ -29,17 +45,25 @@ function Login() {
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-2 my-4 w-full  bg-gray-700"
+          autoComplete="username"
         />
 
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-2 my-4 w-full bg-gray-700"
+          autoComplete="current-password"
         />
-        <button className="p-3 my-4 bg-red-700 w-full rounded-lg">
+        <p className="text-red-500 font-bold text-lg py-2">{errorMessage}</p>
+        <button
+          className="p-3 my-4 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClick}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <p className="p-4 cursor-pointer" onClick={toggleSingInForm}>
