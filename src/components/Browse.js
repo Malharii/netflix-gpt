@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import Header from "./Header";
-import { API_OPTIONS } from "../utils/constanat";
+import MainContainer from "./MainContainer";
+import SecondryContainer from "./SecondryContainer";
 
 function Browse() {
-  const getNowPlayingMovies = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/now_playing?page=1",
-      API_OPTIONS
-    );
-    const json = await data.json();
-    console.log(json);
-  };
-  useEffect(() => {
-    getNowPlayingMovies();
-  });
+  useNowPlayingMovies();
   return (
     <div>
       <Header />
+      <MainContainer />
+      <SecondryContainer />
+      {/* mainconatiner
+           -videobackground
+           -videoTital
+       secondaryContainer
+         -movielis*n
+         -cards *n   
+         */}
     </div>
   );
 }
