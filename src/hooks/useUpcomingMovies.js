@@ -13,9 +13,8 @@ const useUpcomingMovies = () => {
     );
 
     const json = await data.json();
-    console.log(json);
+
     dispatch(addUppcomingMovies(json.results));
-    console.log("malhar");
   };
   useEffect(() => {
     getUpcomingMovies();
